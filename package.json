@@ -1,0 +1,45 @@
+{
+  "name": "EPICMail-React",
+  "version": "1.0.0",
+  "description": "EPICMail brought to life with React",
+  "main": "index.js",
+  "repository": "https://github.com/deschant/EPICMail-React.git",
+  "author": "Deschant Kounou <kounoudeschant@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack.config.dev.js",
+    "dev:open": "webpack-dev-server --config webpack.config.dev.js --open"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-react-app": "^9.0.1",
+    "css-loader": "^3.2.0",
+    "error-overlay-webpack-plugin": "^0.4.1",
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-loader": "^3.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "file-loader": "^4.2.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "dependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  }
+}
