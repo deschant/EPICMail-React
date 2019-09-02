@@ -1,8 +1,8 @@
 .DS_STORE
-node_modules
 build/
 coverage/
 *.log*
 .vscode
 dist
 .env
+node_modules
