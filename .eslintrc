@@ -29,7 +29,8 @@
     "no-unused-vars": "warn",
     "no-trailing-spaces": "warn",
     "max-len": "warn",
-    "arrow-body-style": "warn"
+    "arrow-body-style": "warn",
+    "comma-dangle": "off"
   },
   "root": true
 }
