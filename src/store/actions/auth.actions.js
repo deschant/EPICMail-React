@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import axios from "../../utils/axiosCustom";
 import {
   SIGN_UP_START,
@@ -17,6 +18,7 @@ export const signup = newUser => async dispatch => {
     const { data } = await axios.post("/auth/signup", { ...newUser });
     dispatch(signupSuccess(data.data[0].token));
   } catch (error) {
+    toast.error('Oops, Try your luck again 😅');
     dispatch(signupFail(error));
   }
 };
@@ -30,6 +32,7 @@ export const login = credentials => async dispatch => {
     const { data } = await axios.post("/auth/signin", { ...credentials });
     dispatch(loginSuccess(data.data[0].token));
   } catch (error) {
+    toast.error('Oops, Try your luck again 😅');
     dispatch(loginFail(error));
   }
 };

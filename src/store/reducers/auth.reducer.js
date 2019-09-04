@@ -32,7 +32,8 @@ const reducer = (state = initialState, action) => {
         signupStart: false,
         signupDone: true,
         isAuthenticated: true,
-        currentUser
+        currentUser,
+        error: null
       });
     case SIGN_UP_FAIL:
       return updateObject(state, {
@@ -50,7 +51,8 @@ const reducer = (state = initialState, action) => {
         loginStart: false,
         loginDone: true,
         isAuthenticated: true,
-        currentUser: loggedInUser
+        currentUser: loggedInUser,
+        error: null
       });
     case LOGIN_FAIL:
       return updateObject(state, {
