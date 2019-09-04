@@ -25,7 +25,7 @@ module.exports = {
       filename: "[name].[contentHash].css"
     }),
     new HtmlWebpackPlugin({
-      favicon: "src/favicon.ico",
+      favicon: "src/favicon.png",
       template: "src/index.html",
       minify: {
         // see https://github.com/kangax/html-minifier#options-quick-reference
