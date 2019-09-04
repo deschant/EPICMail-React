@@ -30,7 +30,10 @@
     "no-trailing-spaces": "warn",
     "max-len": "warn",
     "arrow-body-style": "warn",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "arrow-parens": "off",
+    "quotes": "off",
+    "no-case-declarations": "off"
   },
   "root": true
 }

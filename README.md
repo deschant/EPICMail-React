@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.com/deschant/EPICMail-React.svg?branch=master)](https://travis-ci.com/deschant/EPICMail-React) [![Test Coverage](https://api.codeclimate.com/v1/badges/3dfe63e67d1926529a98/test_coverage)](https://codeclimate.com/github/deschant/EPICMail-React/test_coverage)
