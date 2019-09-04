@@ -5,7 +5,9 @@
     "node": false,
     "es6": true
   },
-  "extends": ["airbnb"],
+  "extends": [
+    "airbnb"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -18,7 +20,10 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
       }
     ],
     "import/no-named-as-default": "warn",
@@ -33,7 +38,8 @@
     "comma-dangle": "off",
     "arrow-parens": "off",
     "quotes": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "react/jsx-props-no-spreading": "off"
   },
   "root": true
 }

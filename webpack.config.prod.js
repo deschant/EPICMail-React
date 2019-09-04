@@ -19,7 +19,13 @@ module.exports = {
     filename: "bundle.js"
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({
+      path: path.resolve(__dirname, './.env'),
+      safe: true,
+      systemvars: true,
+      silent: true,
+      defaults: false
+    }),
     new BundleAnalyzerPlugin({ analyzerMode: "static" }),
     new MiniCssExtractPlugin({
       filename: "[name].[contentHash].css"
