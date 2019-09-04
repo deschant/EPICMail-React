@@ -1,14 +1,57 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+import { login } from '../../store/actions/auth.actions';
+import Spinner from '../Spinner';
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      credentials: {
+        email: '',
+        password: ''
+      }
+    };
   }
 
+  handleInputChange = e => {
+    const { name, value } = e.target;
+    this.setState(state => {
+      const { credentials } = state;
+      const updated = { ...credentials, [name]: value };
+      return { ...state, credentials: updated };
+    });
+  };
+
+  handleLogin = e => {
+    e.preventDefault();
+    const { onLogin } = this.props;
+    const { credentials } = this.state;
+    onLogin(credentials);
+  };
+
   render() {
+    const {
+      authReducer: {
+        loginStart,
+        loginDone,
+        isAuthenticated,
+        currentUser
+      },
+      history,
+    } = this.props;
+
+    if (loginStart && !loginDone) {
+      return <Spinner />;
+    }
+
+    if (isAuthenticated) {
+      history.push(`/${currentUser.email}/inbox`);
+    }
     return (
       <div className="wrapper">
         <div className="left">
@@ -20,13 +63,15 @@ class Login extends Component {
             <span id="mail-text">.Mail</span>
           </div>
           <div className="form" id="signin">
-            <form id="login-form" className="form-group">
+            <form onSubmit={this.handleLogin} id="login-form" className="form-group">
               <div className="input-group">
                 <input
                   required
                   type="email"
                   className="text-input"
                   placeholder="Enter your email address"
+                  name="email"
+                  onChange={(e) => this.handleInputChange(e)}
                 />
               </div>
               <div>
@@ -34,6 +79,8 @@ class Login extends Component {
                   required
                   type="password"
                   className="text-input"
+                  name="password"
+                  onChange={(e) => this.handleInputChange(e)}
                   placeholder="Enter your password"
                 />
               </div>
@@ -64,4 +111,16 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = ({ authReducer }) => ({ authReducer });
+
+const mapDispatchToProps = dispatch => ({
+  onLogin: (creds) => dispatch(login(creds)),
+});
+
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
+  authReducer: PropTypes.instanceOf(Object).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

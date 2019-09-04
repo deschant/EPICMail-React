@@ -24,11 +24,11 @@ export const signup = newUser => async dispatch => {
 const loginStart = () => ({ type: LOGIN_START });
 const loginFail = error => ({ type: LOGIN_FAIL, payload: { error } });
 const loginSuccess = token => ({ type: LOGIN_SUCCESS, payload: { token } });
-export const login = newUser => async dispatch => {
+export const login = credentials => async dispatch => {
   try {
     dispatch(loginStart());
-    const { data } = await axios.post("/auth/signup", { ...newUser });
-    dispatch(loginSuccess(data[0].token));
+    const { data } = await axios.post("/auth/signin", { ...credentials });
+    dispatch(loginSuccess(data.data[0].token));
   } catch (error) {
     dispatch(loginFail(error));
   }
