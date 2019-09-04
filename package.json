@@ -10,7 +10,7 @@
     "start": "serve -s ./build",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "dev:open": "webpack-dev-server --config webpack.config.dev.js --open",
-    "test": "jest --coverage -u",
+    "test": "jest --coverage --passWithNoTests -u",
     "test:watch": "jest --watch --coverage",
     "clean": "rimraf ./build && mkdir build",
     "prebuild": "yarn clean",
