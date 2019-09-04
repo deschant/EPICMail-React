@@ -2,12 +2,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { login } from '../../store/actions/auth.actions';
 import Spinner from '../Spinner';
 
-class Login extends Component {
+export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,6 +66,7 @@ class Login extends Component {
               <div className="input-group">
                 <input
                   required
+                  id="login-email"
                   type="email"
                   className="text-input"
                   placeholder="Enter your email address"
@@ -77,6 +77,7 @@ class Login extends Component {
               <div>
                 <input
                   required
+                  id="login-password"
                   type="password"
                   className="text-input"
                   name="password"
@@ -111,9 +112,9 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer }) => ({ authReducer });
+export const mapStateToProps = ({ authReducer }) => ({ authReducer });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onLogin: (creds) => dispatch(login(creds)),
 });
 

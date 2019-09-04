@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { signup } from "../../store/actions/auth.actions";
 import Spinner from "../Spinner";
 
-class Signup extends Component {
+export class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -143,9 +143,9 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer }) => ({ authReducer });
+export const mapStateToProps = ({ authReducer }) => ({ authReducer });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onSignup: newUser => dispatch(signup(newUser))
 });
 

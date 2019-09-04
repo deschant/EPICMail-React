@@ -59,7 +59,7 @@ const reducer = (state = initialState, action) => {
         loginStart: false,
         loginDone: true,
         isAuthenticated: false,
-        error: `${payload.error}`
+        error: payload.error
       });
     default:
       return state;
