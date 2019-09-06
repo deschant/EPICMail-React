@@ -24,6 +24,7 @@ export const signup = newUser => async dispatch => {
         token: userToken
       }
     });
+    sessionStorage.setItem('token', data.data[0].token);
     dispatch(signupSuccess(data.data[0].token));
   } catch (error) {
     toast.error('Oops, Try your luck again 😅');
@@ -42,6 +43,7 @@ export const login = credentials => async dispatch => {
         token: userToken
       }
     });
+    sessionStorage.setItem('token', data.data[0].token);
     dispatch(loginSuccess(data.data[0].token));
   } catch (error) {
     toast.error('Oops, Try your luck again 😅');

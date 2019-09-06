@@ -3,65 +3,58 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import {
-  Signup,
+  Compose,
   mapDispatchToProps,
   mapStateToProps,
-} from '../../src/components/Signup';
+} from '../../src/components/Compose';
 
-const renderSignup = (args) => {
+const renderCompose = (args) => {
   const defaultProps = {
-    onSignup: jest.fn(),
-    history: {
-      push: jest.fn()
-    },
-    authReducer: {}
+    authReducer: {},
+    messageReducer: {},
+    onNewMessage: jest.fn(),
+    history: {}
   };
   const props = { ...defaultProps, ...args };
 
-  return mount(<MemoryRouter><Signup {...props} /></MemoryRouter>);
+  return mount(<MemoryRouter><Compose {...props} /></MemoryRouter>);
 };
 
-describe('Signup Page', () => {
+describe('Compose Page', () => {
   test('Renders signup page', () => {
-    const wrapper = renderSignup({
+    const wrapper = renderCompose({
       authReducer: {
         isAuthenticated: true,
         currentUser: {
           email: 'email'
         }
-      },
-      location: {
-        search: '?auth=false'
       }
     });
+
     wrapper
-      .find('#fN')
+      .find('#to')
       .simulate('change', { target: { value: 'a' } });
     wrapper
-      .find('#lN')
+      .find('#subject')
       .simulate('change', { target: { value: 'a' } });
     wrapper
-      .find('#email-input')
-      .simulate('change', { target: { value: 'a' } });
-    wrapper
-      .find('#password')
-      .simulate('change', { target: { value: 'a' } });
-    wrapper
-      .find('#confirm-password')
+      .find('#mail-editor')
       .simulate('change', { target: { value: 'a' } });
     wrapper
       .find('form')
       .simulate('submit');
 
     expect(wrapper.find('.wrapper').length).toBe(1);
-    expect(wrapper.find('.left').length).toBe(1);
-    expect(wrapper.find('.right').length).toBe(1);
+    expect(wrapper.find('.mail-nav').length).toBe(1);
+    expect(wrapper.find('.mail-nav-items').length).toBe(1);
+    expect(wrapper.find('.mails').length).toBe(1);
+    expect(wrapper.find('Link').length).toBe(2);
     expect(wrapper.find('form').length).toBe(1);
   });
 
   test('should map dispatch and state to props', () => {
     const dispatch = jest.fn();
-    mapDispatchToProps(dispatch).onSignup();
+    mapDispatchToProps(dispatch).onNewMessage({ body: 'message' });
     mapStateToProps({ authReducer: { isAuthenticated: false } });
     expect(mapDispatchToProps).toBe(mapDispatchToProps);
   });
