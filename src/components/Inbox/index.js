@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import Header from '../Header';
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
+import Header from '../Header';
 import '../../assets/styles/components/inbox.scss';
 
 class Inbox extends Component {
@@ -26,6 +30,8 @@ class Inbox extends Component {
   };
 
   render() {
+    const { authReducer, history } = this.props;
+
     return (
       <div className="inbox__container">
         <Header />
@@ -33,14 +39,14 @@ class Inbox extends Component {
           <div id="sidebar" className="mail-area-nav-container sidebar">
             <ul className="mail-area-nav">
               <li>
-                <a className="icon" href="inbox.html" title="Inbox">
+                <Link className="icon" to={`/${authReducer.currentUser.email}/inbox`} title="Inbox">
                   <i className="fas fa-inbox" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="icon" href="compose.html" title="Compose">
+                <Link className="icon" to={`/${authReducer.currentUser.email}/compose`} title="Compose">
                   <i className="fas fa-pen" />
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -96,4 +102,12 @@ class Inbox extends Component {
   }
 }
 
-export default Inbox;
+const mapPropsToState = ({ authReducer }) => ({ authReducer });
+const mapDispatchToState = dispatch => ({});
+
+Inbox.propTypes = {
+  authReducer: PropTypes.instanceOf(Object).isRequired,
+  history: PropTypes.instanceOf(Object).isRequired
+};
+
+export default connect(mapPropsToState, mapDispatchToState)(Inbox);

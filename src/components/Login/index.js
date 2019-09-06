@@ -51,6 +51,7 @@ export class Login extends Component {
     if (isAuthenticated) {
       history.push(`/${currentUser.email}/inbox`);
     }
+
     return (
       <div className="wrapper">
         <div className="left">

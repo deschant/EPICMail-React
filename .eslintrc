@@ -39,7 +39,8 @@
     "arrow-parens": "off",
     "quotes": "off",
     "no-case-declarations": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "react/no-unused-prop-types": "warn"
   },
   "root": true
 }

@@ -11,7 +11,7 @@ import {
 } from "../types/auth.type";
 
 const userToken = sessionStorage.getItem('token');
-const { API_URL } = process.env;
+const { LOCAL_API_URL: API_URL } = process.env;
 
 const signupStart = () => ({ type: SIGN_UP_START });
 const signupFail = error => ({ type: SIGN_UP_FAIL, payload: { error } });
@@ -42,6 +42,7 @@ export const login = credentials => async dispatch => {
         token: userToken
       }
     });
+    sessionStorage.setItem('token', data.data[0].token);
     dispatch(loginSuccess(data.data[0].token));
   } catch (error) {
     toast.error('Oops, Try your luck again 😅');
