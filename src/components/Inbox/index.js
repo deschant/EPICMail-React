@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
-import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Header from '../Header';
 import '../../assets/styles/components/inbox.scss';
+import { fetchMessages } from '../../store/actions/messages.actions';
+import Spinner from '../Spinner';
 
 class Inbox extends Component {
   constructor(props) {
     super(props);
+    props.onFetchMessages();
     this.state = {};
   }
 
@@ -30,7 +33,30 @@ class Inbox extends Component {
   };
 
   render() {
-    const { authReducer, history } = this.props;
+    const { authReducer, messageReducer: { messages } } = this.props;
+
+    let messageItems;
+    if (messages && messages.length > 0) {
+      messageItems = messages.map((msg) => (
+        <li key={msg.id} className="mail-item">
+          <a href="#">
+            <div id="mail-right" className="truncate">
+              <span id="mail-sender">{msg.subject}</span>
+              <span id="mail-title">
+                {msg.message}
+              </span>
+            </div>
+            <div id="mail-left">
+              <span id="mail-timestamp">{moment(msg.created_at).format('hh:mm a')}</span>
+              <span id="mail-delete">
+                <i className="fas fa-trash-alt" />
+              </span>
+            </div>
+          </a>
+        </li>
+      ));
+    } else if (messages && messages.length <= 0) messageItems = <h3>You inbox is empty!</h3>;
+    else messageItems = <Spinner />;
 
     return (
       <div className="inbox__container">
@@ -39,12 +65,12 @@ class Inbox extends Component {
           <div id="sidebar" className="mail-area-nav-container sidebar">
             <ul className="mail-area-nav">
               <li>
-                <Link className="icon" to={`/${authReducer.currentUser.email}/inbox`} title="Inbox">
+                <Link className="icon" to={authReducer.currentUser ? `/${authReducer.currentUser.email}/inbox` : '/?auth=false'} title="Inbox">
                   <i className="fas fa-inbox" />
                 </Link>
               </li>
               <li>
-                <Link className="icon" to={`/${authReducer.currentUser.email}/compose`} title="Compose">
+                <Link className="icon" to={authReducer.currentUser ? `/${authReducer.currentUser.email}/compose` : '/?auth=false'} title="Compose">
                   <i className="fas fa-pen" />
                 </Link>
               </li>
@@ -60,40 +86,7 @@ class Inbox extends Component {
           </button>
           <div className="mail-area">
             <ul className="mail-list">
-              <li className="mail-item">
-                <a href="readmail.html">
-                  <div id="mail-right" className="truncate">
-                    <span id="mail-sender">1. Kounou Deschant</span>
-                    <span id="mail-title">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Ipsum, ratione qu
-                    </span>
-                  </div>
-                  <div id="mail-left">
-                    <span id="mail-timestamp">16:47</span>
-                    <span id="mail-delete">
-                      <i className="fas fa-trash-alt" />
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li className="mail-item">
-                <a href="readmail.html">
-                  <div id="mail-right" className="truncate">
-                    <span id="mail-sender">2. Kounou Deschant</span>
-                    <span id="mail-title">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Ipsum, ratione qu
-                    </span>
-                  </div>
-                  <div id="mail-left">
-                    <span id="mail-timestamp">16:47</span>
-                    <span id="mail-delete">
-                      <i className="fas fa-trash-alt" />
-                    </span>
-                  </div>
-                </a>
-              </li>
+              {messageItems}
             </ul>
           </div>
         </div>
@@ -102,12 +95,15 @@ class Inbox extends Component {
   }
 }
 
-const mapPropsToState = ({ authReducer }) => ({ authReducer });
-const mapDispatchToState = dispatch => ({});
+const mapPropsToState = ({ authReducer, messageReducer }) => ({ authReducer, messageReducer });
+const mapDispatchToState = dispatch => ({
+  onFetchMessages: () => dispatch(fetchMessages())
+});
 
 Inbox.propTypes = {
   authReducer: PropTypes.instanceOf(Object).isRequired,
-  history: PropTypes.instanceOf(Object).isRequired
+  messageReducer: PropTypes.instanceOf(Object).isRequired,
+  onFetchMessages: PropTypes.func.isRequired,
 };
 
 export default connect(mapPropsToState, mapDispatchToState)(Inbox);

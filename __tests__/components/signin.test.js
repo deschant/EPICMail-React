@@ -29,6 +29,9 @@ describe('Login Page', () => {
         currentUser: {
           email: 'email'
         }
+      },
+      location: {
+        search: '?/auth=false'
       }
     });
 

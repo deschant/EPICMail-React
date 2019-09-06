@@ -13,6 +13,7 @@ const renderCompose = (args) => {
     authReducer: {},
     messageReducer: {},
     onNewMessage: jest.fn(),
+    history: {}
   };
   const props = { ...defaultProps, ...args };
 

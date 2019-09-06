@@ -60,8 +60,13 @@ export class Compose extends Component {
       messageReducer: {
         postMessageStart,
         postMessageDone
-      }
+      },
+      history
     } = this.props;
+
+    if (!authReducer.currentUser) {
+      history.push('/?auth=false');
+    }
 
     let form;
 
@@ -120,12 +125,12 @@ export class Compose extends Component {
           <div id="sidebar" className="mail-area-nav-container sidebar">
             <ul className="mail-area-nav">
               <li>
-                <Link className="icon" to={`/${authReducer.currentUser.email}/inbox`} title="Inbox">
+                <Link className="icon" to={authReducer.currentUser ? `/${authReducer.currentUser.email}/inbox` : '/?auth=false'} title="Inbox">
                   <i className="fas fa-inbox" />
                 </Link>
               </li>
               <li>
-                <Link className="icon" to={`/${authReducer.currentUser.email}/compose`} title="Compose">
+                <Link className="icon" to={authReducer.currentUser ? `/${authReducer.currentUser.email}/compose` : '/?auth=false'} title="Compose">
                   <i className="fas fa-pen" />
                 </Link>
               </li>
@@ -155,6 +160,7 @@ Compose.propTypes = {
   authReducer: PropTypes.instanceOf(Object).isRequired,
   messageReducer: PropTypes.instanceOf(Object).isRequired,
   onNewMessage: PropTypes.func.isRequired,
+  history: PropTypes.instanceOf(Object).isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Compose);

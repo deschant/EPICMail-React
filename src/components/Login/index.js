@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import queryString from 'query-string';
 import { login } from '../../store/actions/auth.actions';
+
 import Spinner from '../Spinner';
 
 export class Login extends Component {
@@ -13,7 +16,8 @@ export class Login extends Component {
       credentials: {
         email: '',
         password: ''
-      }
+      },
+      toasted: false,
     };
   }
 
@@ -42,10 +46,18 @@ export class Login extends Component {
         currentUser
       },
       history,
+      location
     } = this.props;
+    const { toasted } = this.state;
 
     if (loginStart && !loginDone) {
       return <Spinner />;
+    }
+
+    const { auth } = queryString.parse(location.search);
+    if (auth && !toasted) {
+      toast.warn('Please login or signup!');
+      this.setState({ toasted: true });
     }
 
     if (isAuthenticated) {
@@ -123,6 +135,7 @@ Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
   history: PropTypes.instanceOf(Object).isRequired,
   authReducer: PropTypes.instanceOf(Object).isRequired,
+  location: PropTypes.instanceOf(Object).isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
