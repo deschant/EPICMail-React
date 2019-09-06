@@ -10,7 +10,6 @@ import {
   LOGIN_FAIL
 } from "../types/auth.type";
 
-const userToken = sessionStorage.getItem('token');
 const { API_URL } = process.env;
 
 const signupStart = () => ({ type: SIGN_UP_START });
@@ -19,11 +18,7 @@ const signupSuccess = token => ({ type: SIGN_UP_SUCCESS, payload: { token } });
 export const signup = newUser => async dispatch => {
   try {
     dispatch(signupStart());
-    const { data } = await axios.post(`${API_URL}/auth/signup`, { ...newUser }, {
-      headers: {
-        token: userToken
-      }
-    });
+    const { data } = await axios.post(`${API_URL}/auth/signup`, { ...newUser });
     sessionStorage.setItem('token', data.data[0].token);
     dispatch(signupSuccess(data.data[0].token));
   } catch (error) {
@@ -38,11 +33,7 @@ const loginSuccess = token => ({ type: LOGIN_SUCCESS, payload: { token } });
 export const login = credentials => async dispatch => {
   try {
     dispatch(loginStart());
-    const { data } = await axios.post(`${API_URL}/auth/signin`, { ...credentials }, {
-      headers: {
-        token: userToken
-      }
-    });
+    const { data } = await axios.post(`${API_URL}/auth/signin`, { ...credentials });
     sessionStorage.setItem('token', data.data[0].token);
     dispatch(loginSuccess(data.data[0].token));
   } catch (error) {
