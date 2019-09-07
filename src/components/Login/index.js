@@ -61,7 +61,7 @@ export class Login extends Component {
     }
 
     if (isAuthenticated) {
-      history.push(`/${currentUser.email}/inbox`);
+      history.push(`/${currentUser.email}/compose`);
     }
 
     return (
