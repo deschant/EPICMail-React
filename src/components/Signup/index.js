@@ -24,12 +24,7 @@ export class Signup extends Component {
     const { name, value } = e.target;
     this.setState(state => {
       const { newUser } = state;
-      let updated;
-      if (name === "email") {
-        updated = { ...newUser, [name]: `${value}@epic.mail` };
-      } else {
-        updated = { ...newUser, [name]: value };
-      }
+      const updated = { ...newUser, [name]: value };
       return { ...state, newUser: updated };
     });
   };
@@ -60,7 +55,7 @@ export class Signup extends Component {
     }
 
     if (isAuthenticated) {
-      history.push(`/${currentUser.email}/compose`);
+      history.push(`/${currentUser.email}/inbox`);
     }
 
     return (
@@ -98,14 +93,13 @@ export class Signup extends Component {
               <div className="input-group">
                 <input
                   required
-                  type="text"
+                  type="email"
                   id="email-input"
                   className="text-input"
                   placeholder="Email address"
                   name="email"
                   onChange={e => this.handleInputChange(e)}
                 />
-                <span id="email-suffix">@epic.mail</span>
               </div>
               <div>
                 <input
@@ -149,13 +143,9 @@ export const mapDispatchToProps = dispatch => ({
   onSignup: newUser => dispatch(signup(newUser))
 });
 
-Signup.defaultProps = {
-  authReducer: {}
-};
-
 Signup.propTypes = {
   onSignup: PropTypes.func.isRequired,
-  authReducer: PropTypes.instanceOf(Object),
+  authReducer: PropTypes.instanceOf(Object).isRequired,
   history: PropTypes.instanceOf(Object).isRequired
 };
 

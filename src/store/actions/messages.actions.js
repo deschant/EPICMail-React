@@ -9,7 +9,6 @@ import {
   FETCH_MESSAGES_FAIL
 } from '../types/messages.type';
 
-const userToken = sessionStorage.getItem('token');
 // eslint-disable-next-line no-undef
 const { API_URL } = process.env;
 
@@ -17,6 +16,7 @@ const newMessageStart = () => ({ type: POST_NEW_MESSAGE_START });
 const newMessageFail = (error) => ({ type: POST_NEW_MESSAGE_FAIL, payload: { error } });
 const newMessageSuccess = (message) => ({ type: POST_NEW_MESSAGE_SUCCESS, payload: { message } });
 export const sendMessage = (newMessage) => async dispatch => {
+  const userToken = sessionStorage.getItem('token');
   try {
     dispatch(newMessageStart());
     const { data } = await axios.post(`${API_URL}/messages`, { ...newMessage }, {
@@ -38,6 +38,7 @@ const fetchMessagesSuccess = (messages) => ({
   payload: { messages }
 });
 export const fetchMessages = () => async dispatch => {
+  const userToken = sessionStorage.getItem('token');
   dispatch(fetchMessageStart());
   try {
     const { data } = await axios.get(`${API_URL}/messages`, {
